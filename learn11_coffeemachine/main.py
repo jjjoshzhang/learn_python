@@ -53,62 +53,66 @@ def calc(q,d,n,p,c):
 
 def espresso(a,c):
     global money,drink_names
-    q = float(input("how many quarters?: "))
-    d = float(input("how many quarters?: "))
-    n = float(input("how many quarters?: "))
-    p = float(input("how many quarters?: "))
-    moneyt = calc(q,d,n,p,c)
-    if a['espresso']['cost'] > moneyt:
-        print("Sorry, that's not enough money. Money refunded.")
-    elif a['espresso']['cost'] < moneyt:
-        moneyrf = moneyt - a['espresso']['cost']
-        money += a['espresso']['cost']
-        print(f"Here is ${moneyrf:.2f} in change."
-              "Here is your espresso ☕️. Enjoy!")
-        makecoffe(a,drink_names[0])
+    if makecoffe(a,drink_names[0]):
+        print("Please insert coins")
+        q = float(input("how many quarters?: "))
+        d = float(input("how many dimes?: "))
+        n = float(input("how many nickels?: "))
+        p = float(input("how many pennies?: "))
+        moneyt = calc(q,d,n,p,c)
+        if a['espresso']['cost'] > moneyt:
+            print("Sorry, that's not enough money. Money refunded.")
+        elif a['espresso']['cost'] < moneyt:
+            moneyrf = moneyt - a['espresso']['cost']
+            money += a['espresso']['cost']
+            print(f"Here is ${moneyrf:.2f} in change. "
+                  "Here is your espresso ☕️. Enjoy!")
 
 
 def latte(a,c):
     global money,drink_names
-    q = float(input("how many quarters?: "))
-    d = float(input("how many quarters?: "))
-    n = float(input("how many quarters?: "))
-    p = float(input("how many quarters?: "))
-    moneyt = calc(q, d, n, p, c)
-    if a['latte']['cost'] > moneyt:
-        print("Sorry, that's not enough money. Money refunded.")
-    elif a['latte']['cost'] < moneyt:
-        moneyrf = moneyt - a['latte']['cost']
-        money += a['latte']['cost']
-        print(f"Here is ${moneyrf:.2f} in change."
-              "Here is your latte ☕️. Enjoy!")
-        makecoffe(a,drink_names[1])
+    if makecoffe(a,drink_names[1]):
+        print("Please insert coins")
+        q = float(input("how many quarters?: "))
+        d = float(input("how many dimes?: "))
+        n = float(input("how many nickels?: "))
+        p = float(input("how many pennies?: "))
+        moneyt = calc(q, d, n, p, c)
+        if a['latte']['cost'] > moneyt:
+            print("Sorry, that's not enough money. Money refunded.")
+        elif a['latte']['cost'] < moneyt:
+            moneyrf = moneyt - a['latte']['cost']
+            money += a['latte']['cost']
+            print(f"Here is ${moneyrf:.2f} in change. "
+                  "Here is your latte ☕️. Enjoy!")
 
 def cappuccino(a,c):
     global money,drink_names
-    q = float(input("how many quarters?: "))
-    d = float(input("how many quarters?: "))
-    n = float(input("how many quarters?: "))
-    p = float(input("how many quarters?: "))
-    moneyt = calc(q, d, n, p, c)
-    if a['cappuccino']['cost'] > moneyt:
-        print("Sorry, that's not enough money. Money refunded.")
-    elif a['cappuccino']['cost'] < moneyt:
-        moneyrf = moneyt - a['cappuccino']['cost']
-        money += a['cappuccino']['cost']
-        print(f"Here is ${moneyrf:.2f} in change."
-              "Here is your cappuccino ☕️. Enjoy!")
-        makecoffe(a,drink_names[2])
+    if makecoffe(a, drink_names[2]):
+        print("Please insert coins")
+        q = float(input("how many quarters?: "))
+        d = float(input("how many dimes?: "))
+        n = float(input("how many nickels?: "))
+        p = float(input("how many pennies?: "))
+        moneyt = calc(q, d, n, p, c)
+        if a['cappuccino']['cost'] > moneyt:
+            print("Sorry, that's not enough money. Money refunded.")
+        elif a['cappuccino']['cost'] < moneyt:
+            moneyrf = moneyt - a['cappuccino']['cost']
+            money += a['cappuccino']['cost']
+            print(f"Here is ${moneyrf:.2f} in change. "
+                  "Here is your cappuccino ☕️. Enjoy!")
 
 
 def makecoffe(a,n):
     global resources
-    resources['water'] -= a[n]['ingredients']['water']
-    resources['milk'] -= a[n]['ingredients']['milk']
-    resources['coffee'] -= a[n]['ingredients']['coffee']
-
-
-
+    for item in a[n]['ingredients']:
+        if resources[item] < a[n]['ingredients'][item]:
+            print(f"Sorry there's not enough {item}")
+            return False
+    for item in a[n]['ingredients']:
+        resources[item] -= a[n]['ingredients'][item]
+    return True
 
 
 money = 0
